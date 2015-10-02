@@ -30,8 +30,8 @@ class BackupSqlCommand extends ContainerAwareCommand
     {
         $this
             ->setName("backup:sql")
-            ->addArgument('format', InputOption::VALUE_OPTIONAL, 'Filename date format', 'D')
-            ->addArgument('prefix', InputOption::VALUE_OPTIONAL, 'Filename prefix', 'backup-')
+            ->addArgument('format', InputArgument::OPTIONAL, 'Filename date format', 'D')
+            ->addArgument('prefix', InputArgument::OPTIONAL, 'Filename prefix', 'backup-')
             ->addOption('compress', 'c', InputOption::VALUE_NONE, 'Compress output', 'If set, the generated file will be compressed')
             ->addOption('bin', 'b', InputOption::VALUE_OPTIONAL, 'The path to binary mysqldump', 'mysqldump')
             ->setDescription("Create a backup file of the database in the backup directory")
@@ -86,7 +86,8 @@ class BackupSqlCommand extends ContainerAwareCommand
 
         $verboseOpt = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE ? "-v" : "";
         $command = $bin." " . implode(' ', $opts) . " {$database} {$verboseOpt} > {$out}";
-        $output->writeln($command);
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_DEBUG)
+			$output->writeln($command);
         $process = new Process($command);
         $process->run(function ($type, $buffer) use ($output, $out) {
             if ('err' === $type) {
@@ -107,7 +108,7 @@ class BackupSqlCommand extends ContainerAwareCommand
 				$zip->close();
 				if (file_exists("{$out}.zip")) {
 					if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE)
-						$output->writeln(sprintf("<info>'{$database}' backup successfully saved in '{$out}.zip'</info>");
+						$output->writeln(sprintf("<info>'{$database}' backup successfully saved in '{$out}.zip'</info>"));
 					@unlink($out);
 				}
 				else if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
