@@ -32,7 +32,7 @@ class BackupSqlCommand extends ContainerAwareCommand
             ->setName("backup:sql")
             ->addArgument('format', InputArgument::OPTIONAL, 'Filename date format', 'D')
             ->addArgument('prefix', InputArgument::OPTIONAL, 'Filename prefix', 'backup-')
-            ->addOption('compress', 'c', InputOption::VALUE_NONE, 'Compress output', 'If set, the generated file will be compressed')
+            ->addOption('compress', 'c', InputOption::VALUE_OPTIONAL, 'Compress output')
             ->addOption('bin', 'b', InputOption::VALUE_OPTIONAL, 'The path to binary mysqldump', 'mysqldump')
             ->setDescription("Create a backup file of the database in the backup directory")
 			->setHelp("format accept php date function format : http://php.net/manual/en/function.date.php");
@@ -101,7 +101,7 @@ class BackupSqlCommand extends ContainerAwareCommand
             $output->writeln("<info>" . file_get_contents($out) . "</info>");
         }
 		
-        if ($input->getOption('compress')) {
+        if ($input->hasOption('compress')) {
 			$zip = new \ZipArchive();
 			if ($zip->open("{$out}.zip", \ZIPARCHIVE::CREATE) === true) {
 				$zip->addFile($out, basename($out));
