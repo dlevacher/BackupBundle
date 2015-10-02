@@ -2,6 +2,7 @@
     "name": "itsis/backup-bundle",
     "description": "Lets make a backup of the database",
     "license": "MIT",
+	"version": "0.1.0",
     "authors": [
         {
             "name": "Damien Levacher",
