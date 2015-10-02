@@ -30,7 +30,8 @@ class BackupSqlCommand extends ContainerAwareCommand
     {
         $this
             ->setName("backup:sql")
-            ->addArgument('format', InputOption::VALUE_OPTIONAL, 'Filename date format [D]', 'D')
+            ->addArgument('format', InputOption::VALUE_OPTIONAL, 'Filename date format', 'D')
+            ->addArgument('prefix', InputOption::VALUE_OPTIONAL, 'Filename prefix', 'backup-')
             ->addOption('compress', 'c', InputOption::VALUE_NONE, 'Compress output', 'If set, the generated file will be compressed')
             ->addOption('bin', 'b', InputOption::VALUE_OPTIONAL, 'The path to binary mysqldump', 'mysqldump')
             ->setDescription("Create a backup file of the database in the backup directory")
@@ -65,7 +66,7 @@ class BackupSqlCommand extends ContainerAwareCommand
             $fs->mkdir($dir);
         }
 
-        $filename = 'backup-'.date($input->getArgument('format')) . ".sql";
+        $filename = $input->getArgument('prefix').date($input->getArgument('format')) . ".sql";
         $out = $dir . DIRECTORY_SEPARATOR . $filename;
 
         $opts = array(
