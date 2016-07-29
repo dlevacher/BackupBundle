@@ -1,6 +1,6 @@
 <?php
 
-namespace Itsis\BackupBundle\Command;
+namespace Dlevacher\BackupBundle\Command;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\Tools\Export\ClassMetadataExporter;
@@ -18,8 +18,8 @@ use Symfony\Component\Process\Process;
  *
  * Lets make a backup of the database
  *
- * @package Itsis\BackupBundle\Command
- * @author Maarek Joseph <josephmaarek@gmail.com>
+ * @package Dlevacher\BackupBundle\Command
+ * @author Damien Levacher <dlevacher@gmail.com>
  */
 class BackupSqlCommand extends ContainerAwareCommand
 {
@@ -61,7 +61,7 @@ class BackupSqlCommand extends ContainerAwareCommand
         }
 
         $fs = new Filesystem();
-        $dir = $this->getContainer()->getParameter("itsis_backup.dir");
+        $dir = $this->getContainer()->getParameter("dlevacher_backup.dir");
         if (false === $fs->exists($dir)) {
             $fs->mkdir($dir);
         }

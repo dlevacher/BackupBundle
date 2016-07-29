@@ -1,4 +1,4 @@
-# ItsisBackupBundle
+# DlevacherBackupBundle
 
 Provide a simple Symfony 2 Bundle to backup database via one command.
 
@@ -6,7 +6,7 @@ Provide a simple Symfony 2 Bundle to backup database via one command.
 ```json
 {
     "require": {
-        "itsis/backup-bundle": "dev-master"
+        "dlevacher/backup-bundle": "dev-master"
     }
 }
 ```
@@ -18,7 +18,7 @@ Provide a simple Symfony 2 Bundle to backup database via one command.
 ```php
 public function registerBundles() {
   $bundles = array(
-    new Itsis\BackupBundle()
+    new Dlevacher\BackupBundle()
   );
 }
 ```
@@ -26,12 +26,12 @@ public function registerBundles() {
 To provide custom backup dir. Add a config options in your config.yml, like:
 
 ```yaml
-jma_backup:
+dlevacher_backup:
     dir: "%kernel.root_dir%/backup"
 ```
 
 Then to access this setup call:
 
 ```php
-$this->get('itsis_backup.dir');
+$this->get('dlevacher_backup.dir');
 ```
